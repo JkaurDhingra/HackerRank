@@ -4,20 +4,23 @@ public class Solution {
 
     static boolean isAnagram(String a, String b) {
         // Complete the function
+
+        // Convert both strings to lowercase
+        a = a.toLowerCase();
+        b = b.toLowerCase();
         
-        // Convert both strings to lowercase and convert them to character arrays
-        char arr[] = a.toLowerCase().toCharArray();
-        char brr[] = b.toLowerCase().toCharArray();
-        
-        // Sort both character arrays
-        java.util.Arrays.sort(arr);
-        java.util.Arrays.sort(brr);
-        
-        if(arr.length != brr.length) return false; // Lengths not equal -> Not Anagrams
-        
-        // Compare the characters in both sorted arrays
-        for(int i = 0; i < arr.length; i++){
-            if(arr[i] != brr[i]) return false;
+        // Use a frequency array to track letter counts, incrementing for string 'a' and decrementing for string 'b'
+        int freq[] = new int[26];
+        for(int i = 0; i < a.length(); i++){
+            freq[a.charAt(i) - 'a']++;
+        }
+        for(int i = 0; i < b.length(); i++){
+            freq[b.charAt(i) - 'a']--;
+        }
+
+        // Check if all frequencies are zero; if any non-zero value is found, return false (not anagrams)
+        for(int i = 0; i < 26; i++){
+            if(freq[i] != 0) return false;
         }
         return true;
     }
